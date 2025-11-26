@@ -1,8 +1,8 @@
--- Criação do Banco de Dados
+-- criação do Banco de Dados
 CREATE DATABASE IF NOT EXISTS locadora_db;
 USE locadora_db;
 
--- 1. Tabelas Independentes (sem FKs obrigatórias na criação)
+-- 1. tabelas independentes (sem FKs obrigatórias na criação)
 
 CREATE TABLE TB_LOJA (
     id_loja INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,7 +49,7 @@ CREATE TABLE TB_CUPOM (
     validade DATE NOT NULL
 );
 
--- 2. Tabelas Dependentes (possuem FKs)
+-- 2. tabelas dependentes (possuem FKs)
 
 CREATE TABLE TB_MOTORISTA (
     id_motorista INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,9 +75,9 @@ CREATE TABLE TB_LOCACAO (
     data_retirada DATETIME NOT NULL,
     data_devolucao DATETIME NOT NULL,
     km_inicial INT NOT NULL,
-    km_final INT, -- Pode ser null se ainda não devolveu
+    km_final INT, -- pode ser null se ainda não devolveu
     
-    -- Chaves Estrangeiras
+    -- chaves estrangeiras
     id_cliente INT NOT NULL,
     id_veiculo INT NOT NULL,
     id_seguro INT NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE TB_LOCACAO (
     FOREIGN KEY (id_motorista) REFERENCES TB_MOTORISTA(id_motorista)
 );
 
--- 3. Tabelas Operacionais e Financeiras
+-- 3. tabelas operacionais e financeiras
 
 CREATE TABLE TB_PAGAMENTO (
     id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
@@ -103,11 +103,11 @@ CREATE TABLE TB_PAGAMENTO (
     data_emissao DATETIME DEFAULT CURRENT_TIMESTAMP,
     metodo_pagamento VARCHAR(50) NOT NULL, -- Pix, Crédito, etc.
     
-    -- Detalhamento (Nota Fiscal)
+    -- detalhamento (Nota Fiscal)
     subtotal_diarias DECIMAL(10,2) NOT NULL,
     valor_total_final DECIMAL(10,2) NOT NULL,
     
-    -- Campos Opcionais (Nullable)
+    -- campos opcionais (podem ser null)
     valor_servico_motorista DECIMAL(10,2),
     valor_seguro DECIMAL(10,2),
     valor_multas DECIMAL(10,2),
